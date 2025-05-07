@@ -1,4 +1,4 @@
-📁 # next-crud-api
+# 📁 next-crud-api
 
 API criada com Ruby on Rails para gerenciamento básico de produtos, utilizando operações CRUD.
 
