@@ -1,11 +1,22 @@
 class ProdutosController < ApplicationController
+  include Pagy::Backend
   before_action :set_produto, only: %i[ show update destroy ]
 
   # GET /produtos
   def index
-    @produtos = Produto.all
+    @pagy, @produtos = pagy(Produto.all, items: 10 )
+    #response.headers.merge!(pagy_headers_merge(@pagy))
+    #@produtos = Produto.all
+    #render json: @produtos
+    render json: {
+      data: @produtos,
+      pagination: {
+        page: @pagy.page,
+        pages: @pagy.pages,
+        items: @pagy.count,
+      }
+    }
 
-    render json: @produtos
   end
 
   # GET /produtos/1
