@@ -1,0 +1,22 @@
+FROM ruby:3.2
+
+# Instala dependências do sistema
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client yarn
+
+# Configura o diretório da aplicação
+WORKDIR /app
+
+# Copia o Gemfile e o Gemfile.lock para instalar gems
+COPY Gemfile Gemfile.lock ./
+
+# Instala gems
+RUN bundle install
+
+# Copia todo o código da aplicação
+COPY . .
+
+# Expõe a porta padrão do Rails
+EXPOSE 3000
+
+# Comando padrão para iniciar o servidor Rails no modo dev
+CMD ["rails", "server", "-b", "0.0.0.0"]
